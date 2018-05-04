@@ -6,4 +6,4 @@ clipped.zip: images created in clipped_no_normal
 
 clipped_random.py: crop the inital MIAS dataset with normal images. The (X,Y) is randomly choosed
 
-clipped_random.zip: images created in clipped_random.py
+random_clipped.zip: images created in clipped_random.py
