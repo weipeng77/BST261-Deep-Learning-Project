@@ -45,6 +45,8 @@ for i in mammo_df.index:
         mammo_df['X'][i], mammo_df['Y'][i] = np.random.randint(1024, size = 2)
         mammo_df['RADIUS'][i] = 24
         mammo_df['SEVERITY'][i] = 0
+#    else:                                  Then, 0 represents normal, 1 represents abnormal
+#        mammo_df['SEVERITY'][i] = 1  
 mammo_df = mammo_df.dropna(axis=0, how='any')
 mammo_df['X'] = mammo_df['X'].astype(int)
 mammo_df['Y'] = mammo_df['Y'].astype(int)
@@ -75,3 +77,4 @@ for i in mammo_df.index:
     image.save(write_dir)
     clipped_path.append(write_dir)
 
+mammo_df['clipped_path'] = clipped_path   # add path for newly clipped images

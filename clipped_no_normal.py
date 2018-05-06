@@ -72,7 +72,7 @@ for i in mammo_df.index:
     image.save(write_dir)
     clipped_path.append(write_dir)
     
-
+mammo_df['clipped_path'] = clipped_path   # add path for newly clipped images
 
 from sklearn.preprocessing import LabelEncoder
 from keras.utils.np_utils import to_categorical
