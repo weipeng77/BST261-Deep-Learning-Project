@@ -88,10 +88,10 @@ for i in mammo_df.index:
         )
     if mammo_df['REFNUM'][i] in exist.keys():
         exist[mammo_df['REFNUM'][i]] += 1
-        write_dir = os.path.join('random_clipped', mammo_df['REFNUM'][i] + '_%d_clipped.tiff' % exist[mammo_df['REFNUM'][i]])
+        write_dir = os.path.join('center_clipped', mammo_df['REFNUM'][i] + '_%d_clipped.tiff' % exist[mammo_df['REFNUM'][i]])
     else:
         exist[mammo_df['REFNUM'][i]] = 1
-        write_dir = os.path.join('random_clipped', mammo_df['REFNUM'][i] + '_clipped.tiff')
+        write_dir = os.path.join('center_clipped', mammo_df['REFNUM'][i] + '_clipped.tiff')
     image = image.resize([48, 48])
     image.save(write_dir)
     clipped_path.append(write_dir)
