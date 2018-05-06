@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri May  4 14:46:39 2018
+
+@author: jingjingtang
+"""
+
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+import matplotlib.pyplot as plt # showing and rendering figures
+# io related
+import os
+from skimage.io import imread, imread, imsave, imshow
+import h5py
+from scipy import misc
+from seam_carver import intelligent_resize
+import matplotlib.pyplot as plt
+from resizeimage import resizeimage
+from PIL import Image
+import cv2
+
+#construct the dataframe for train data
+pic_list = os.listdir("CBIS-DDSM/MASS_train")
+if '.DS_Store' in pic_list:
+    pic_list.remove('.DS_Store')
+pic_info = [l.replace(".tiff", "") for l in pic_list]
+sep = [l.split("_") for l in pic_info]
+train_df = pd.DataFrame(sep)
+train_df['id'] = train_df[0] + "_"+ train_df[1].astype(str)
+train_df = train_df[[2,3,4,"id"]]
+train_df.columns = ["left or right breast", "image view", "abnormality id", "patient_id"]
+train_df['abnormality id'] = train_df['abnormality id'].astype(int)
+mass_train = pd.read_csv("CBIS-DDSM/mass_case_description_train_set.csv")
+train_df = train_df.merge(mass_train, on = ["left or right breast", "image view", "abnormality id", "patient_id"])
+train_df['path'] = ["CBIS-DDSM/MASS_TRAIN/" + l for l in pic_list]
+train_df = train_df[["patient_id","left or right breast", "image view","abnormality id", "pathology", "path"]]
+train_df = train_df[train_df['pathology'] != 'BENIGN_WITHOUT_CALLBACK']
+
+
+#construct the data frame for test data
+pic_list = os.listdir("CBIS-DDSM/MASS_test")
+if '.DS_Store' in pic_list:
+    pic_list.remove('.DS_Store')
+pic_info = [l.replace(".tiff", "") for l in pic_list]
+sep = [l.split("_") for l in pic_info]
+test_df = pd.DataFrame(sep)
+test_df['id'] = test_df[0] + "_"+ test_df[1].astype(str)
+test_df = test_df[[2,3,4,"id"]]
+test_df.columns = ["left or right breast", "image view", "abnormality id", "patient_id"]
+test_df['abnormality id'] = test_df['abnormality id'].astype(int)
+mass_test = pd.read_csv("CBIS-DDSM/mass_case_description_test_set.csv")
+test_df = test_df.merge(mass_test, on = ["left or right breast", "image view", "abnormality id", "patient_id"])
+test_df['path'] = ["CBIS-DDSM/MASS_TEST/" + l for l in pic_list]
+test_df = test_df[["patient_id","left or right breast", "image view","abnormality id", "pathology", "path"]]
+test_df = test_df[test_df['pathology'] != 'BENIGN_WITHOUT_CALLBACK']
