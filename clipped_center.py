@@ -53,16 +53,16 @@ for i in mammo_df.index:
         mammo_df['X'][i], mammo_df['Y'][i] = 512, 512
         image_dir = os.path.join(mammo_df['path'][i])
         image = imread(image_dir)
-        if sum(sum(image[512-150:512+150,512-150:512])) > sum(sum(image[512-150:512+150,512:512+150])):
-            mammo_df['X'][i] = 512-75
+        if sum(sum(image[512-74:512+74,512-74:512])) > sum(sum(image[512-74:512+74,512:512+74])):
+            mammo_df['X'][i] = 512-37
         else:
-            mammo_df['X'][i] = 512+75
-        x = mammo_df['X'][i]
-        if sum(sum(image[512-150:512,x-75:x+75])) > sum(sum(image[512:512+150,x-75:x+75])):
-            mammo_df['Y'][i] = 512-75
+            mammo_df['X'][i] = 512+37
+        x = mammo_df['X'][i].astype(int)
+        if sum(sum(image[512-74:512,x-37:x+37])) > sum(sum(image[512:512+74,x-37:x+37])):
+            mammo_df['Y'][i] = 512-37
         else:
-            mammo_df['Y'][i] = 512+75
-        mammo_df['RADIUS'][i] = 150
+            mammo_df['Y'][i] = 512+37
+        mammo_df['RADIUS'][i] = 74
         mammo_df['SEVERITY'][i] = 0
 #    else:                                  Then, 0 represents normal, 1 represents abnormal
 #        mammo_df['SEVERITY'][i] = 1  
